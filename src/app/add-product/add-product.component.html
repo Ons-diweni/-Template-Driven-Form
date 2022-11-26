@@ -1,0 +1,107 @@
+<!-- <form #form="ngForm" name="form" novalidate>
+    <div class="container p-5 my-5 border">
+
+
+        <div class="mb-3">
+            <label class="form-label"> Id Produit </label>
+            <input name="idProduit" required #idProduit="ngModel" ngModel class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Code </label>
+            <input name="code" required pattern="[a-zA-Z-0-9]{8}" #code="ngModel" ngModel class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Libelle </label>
+            <input name="libelle" minlength="3" required #libelle="ngModel" ngModel class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Prix unitaire </label>
+            <input name="prixUnitaire" required pattern="[1-9][0-9]*" #prixUnitaire="ngModel" ngModel class="form-control">
+        </div>
+        <button disabled="idProduit.invalid || code.invalid || libelle.invalid || prixUnitaire.invalid" [hidden]="idProduit.valid && code.valid && libelle.valid && prixUnitaire.valid" class="btn btn-primary"> Suivant </button> <br>
+
+        <div [hidden]="idProduit.invalid || code.invalid || libelle.invalid || prixUnitaire.invalid">
+            <div class="mb-3">
+                <label class="form-label"> Id Details Produit </label>
+                <input name="idDetailsProduit" required #idDetailsProduit="ngModel" ngModel class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label"> Date crèation </label>
+                <input name="dateCreation" required #dateCreation="ngModel" ngModel class="form-control">
+            </div>
+            <div [hidden]="dateCreation.invalid" class="mb-3">
+                <label class="form-label"> Date derniére modification </label>
+                <input name="dateDerniereModification" required #dateDerniereModification="ngModel" ngModel class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label"> Catègorie </label>
+                <select name="categorie" required #categorie="ngModel" ngModel class="form-control">
+                <option> Electromenager </option>
+                <option> Alimentaire </option>
+                <option> Quincaillerie </option>
+            </select>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" [hidden]="form.invalid"> Ajouter </button>
+    </div>
+</form> -->
+
+<form #form="ngForm" name="form" novalidate>
+    <div class="container p-5 my-5 border">
+
+
+        <div class="mb-3">
+            <label class="form-label"> Id Produit </label>
+            <input name="idProduit" required #idProduit="ngModel" ngModel class="form-control">
+            <small class="alert alert-danger" *ngIf="idProduit.invalid && idProduit.touched">  Id Product is required </small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Code </label>
+            <input name="code" required pattern="[a-zA-Z-0-9]{8}" #code="ngModel" ngModel class="form-control">
+            <small class="alert alert-danger" *ngIf="code.invalid && code.touched && code.errors?.['required']"> Code is required </small>
+            <small class="alert alert-danger" *ngIf="code.invalid && code.touched && code.errors?.['pattern']"> Code is alphanumerical only And must be 8 characters long </small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Libelle </label>
+            <input name="libelle" minlength="3" required #libelle="ngModel" ngModel class="form-control">
+            <small class="alert alert-danger" *ngIf="libelle.invalid && libelle.touched && libelle.errors?.['required']"> Wording is required </small>
+            <small class="alert alert-danger" *ngIf="libelle.invalid && libelle.touched && libelle.errors?.['pattern']"> Wording must be at least 3 characters long </small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"> Prix unitaire </label>
+            <input name="prixUnitaire" required pattern="[1-9][0-9]*" #prixUnitaire="ngModel" ngModel class="form-control">
+            <small class="alert alert-danger" *ngIf="prixUnitaire.invalid && prixUnitaire.touched && prixUnitaire.errors?.['required']"> Price is required </small>
+            <small class="alert alert-danger" *ngIf="prixUnitaire.invalid && prixUnitaire.touched && prixUnitaire.errors?.['pattern']"> This field accept Only numbers</small>
+        </div>
+        <button disabled="idProduit.invalid || code.invalid || libelle.invalid || prixUnitaire.invalid" *ngIf="idProduit.invalid || code.invalid || libelle.invalid || prixUnitaire.invalid" class="btn btn-primary"> Suivant </button> <br>
+
+        <div *ngIf="idProduit.valid && code.valid && libelle.valid && prixUnitaire.valid">
+            <div class="mb-3">
+                <label class="form-label"> Id Details Produit </label>
+                <input name="idDetailsProduit" required #idDetailsProduit="ngModel" ngModel class="form-control">
+                <small class="alert alert-danger" *ngIf="idDetailsProduit.invalid && idDetailsProduit.touched"> Id Details Product is required </small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"> Date crèation </label>
+                <input type="date" name="dateCreation" required #dateCreation="ngModel" ngModel class="form-control">
+                <small class="alert alert-danger" *ngIf="dateCreation.invalid && dateCreation.touched"> Date Creation is required </small>
+            </div>
+            <div *ngIf="dateCreation.valid" class="mb-3">
+                <label class="form-label"> Date derniére modification </label>
+                <input type="date" name="dateDerniereModification" required #dateDerniereModification="ngModel" ngModel class="form-control">
+                <small class="alert alert-danger" *ngIf="dateDerniereModification.invalid && dateDerniereModification.touched"> Date last modification is required </small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"> Catègorie </label>
+                <select name="categorie" required #categorie="ngModel" ngModel class="form-control">
+                <option> Electromenager </option>
+                <option> Alimentaire </option>
+                <option> Quincaillerie </option>
+            </select>
+                <small class="alert alert-danger" *ngIf="categorie.invalid && categorie.touched"> Category is required </small>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" *ngIf="form.valid"> Ajouter </button>
+
+    </div>
+</form>
